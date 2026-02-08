@@ -7,7 +7,7 @@ const TemplatePage = () => {
             <div className="pl-4 pt-5 text-4xl">
                 Starter
             </div>
-            <Breadcrumb>
+            <Breadcrumb className="text-sm pl-4">
                 <Breadcrumb.Item label="Home" active={true} />
                 <Breadcrumb.Item label="Home" />
                 <Breadcrumb.Item label="Home" />

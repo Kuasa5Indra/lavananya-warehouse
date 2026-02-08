@@ -1,6 +1,7 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome'
 import { usePage } from "@inertiajs/react"
+import Menu from '@/components/ui/Menu';
 
 const Navbar = () => {
     const { name } = usePage().props;
@@ -22,18 +23,9 @@ const Navbar = () => {
                             <img src='https://ui-avatars.com/api/?name=John+Doe' width={100} height={100} />
                         </div>
                     </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                        <li>
-                            <a className="justify-between">
-                                Profile
-                                <span className="badge">New</span>
-                            </a>
-                        </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
-                    </ul>
+                    <Menu tabIndex={0} size='sm' className='dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow'>
+                        <Menu.Item href={'/'}>Logout</Menu.Item>
+                    </Menu>
                 </div>
             </div>
         </div>
