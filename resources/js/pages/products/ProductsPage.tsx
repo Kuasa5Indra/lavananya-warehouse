@@ -67,7 +67,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({ products }) => {
                                 </thead>
                                 <tbody>
                                     {products.map((item, index) => (
-                                        <tr>
+                                        <tr key={index}>
                                             <th>{index + 1}</th>
                                             <td>{item.product_code}</td>
                                             <td>{item.product_name}</td>

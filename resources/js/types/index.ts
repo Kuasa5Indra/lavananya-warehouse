@@ -15,3 +15,23 @@ export type Product = {
     stock: number,
     product_unit: string
 }
+
+export type IncomingGoodsReport = {
+    id: string,
+    product_id: string,
+    date_import: Date,
+    amount: number,
+    annotation: string,
+    updated_at: Date,
+    product: Product
+}
+
+export type OutgoingGoodsReport = {
+    id: string,
+    product_id: string,
+    date_export: Date,
+    amount: number,
+    annotation: string,
+    updated_at: Date,
+    product: Product
+}
