@@ -41,4 +41,9 @@ Route::name('reports.')->prefix('reports')->group(function(){
         Route::put('/{id}/update', [ProductTransactionController::class, 'outgoingGoodUpdateData'])->name('update');
         Route::delete('/{id}/delete', [ProductTransactionController::class, 'outgoingGoodDeleteData'])->name('destroy');
     });
+
+    Route::name('stock-report.')->prefix('/stock-reports')->group(function(){
+        Route::get('/', [ProductTransactionController::class, 'stockReports'])->name('index');
+        Route::get('/{id}/details', [ProductTransactionController::class, 'detailStockReport'])->name('show');
+    });
 });

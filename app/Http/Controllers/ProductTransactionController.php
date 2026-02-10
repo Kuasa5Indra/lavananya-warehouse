@@ -174,4 +174,18 @@ class ProductTransactionController extends Controller
             return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => $ex->getMessage()])->back();
         }
     }
+
+    public function stockReports(){
+        $products = Product::with(['latestIncomingGoods', 'latestOutgoingGoods'])->get();
+        return Inertia::render('stock-report/StockReportPage', [
+            'products' => $products
+        ]);
+    }
+
+    public function detailStockReport(string $id){
+        $product = Product::with(['incomingGoods', 'outgoingGoods'])->find($id);
+        return Inertia::render('stock-report/DetailStockReportPage', [
+            'product' => $product
+        ]);
+    }
 }

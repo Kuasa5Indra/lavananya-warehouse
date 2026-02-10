@@ -13,7 +13,11 @@ export type Product = {
     product_code: string,
     product_name: string,
     stock: number,
-    product_unit: string
+    product_unit: string,
+    latest_incoming_goods?: IncomingGoodsReport,
+    latest_outgoing_goods?: OutgoingGoodsReport,
+    incoming_goods?: IncomingGoodsReport[],
+    outgoing_goods?: OutgoingGoodsReport[]
 }
 
 export type IncomingGoodsReport = {

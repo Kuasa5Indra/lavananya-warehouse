@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -24,5 +26,21 @@ class Product extends Model
             $nextNumber = $countToday + 1;
             $product->product_code = 'PRD-' . $today . '-' . $nextNumber;
         });
+    }
+
+    public function incomingGoods(): HasMany {
+        return $this->hasMany(IncomingGoods::class);
+    }
+
+    public function outgoingGoods(): HasMany {
+        return $this->hasMany(OutgoingGoods::class);
+    }
+
+    public function latestIncomingGoods(): HasOne {
+        return $this->hasOne(IncomingGoods::class)->orderByDesc('date_import');
+    }
+
+    public function latestOutgoingGoods(): HasOne {
+        return $this->hasOne(OutgoingGoods::class)->orderByDesc('date_export');
     }
 }
