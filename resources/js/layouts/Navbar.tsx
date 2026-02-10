@@ -2,9 +2,10 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome'
 import { usePage } from "@inertiajs/react"
 import Menu from '@/components/ui/Menu';
+import { logout } from '@/routes';
 
 const Navbar = () => {
-    const { name } = usePage().props;
+    const { name, auth } = usePage().props;
 
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -20,11 +21,11 @@ const Navbar = () => {
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img src='https://ui-avatars.com/api/?name=John+Doe' width={100} height={100} />
+                            <img src={`https://ui-avatars.com/api/?name=${auth.user.name as string}`} width={100} height={100} />
                         </div>
                     </div>
                     <Menu tabIndex={0} size='sm' className='dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow'>
-                        <Menu.Item href={'/'}>Logout</Menu.Item>
+                        <Menu.Item href={logout()}>Logout</Menu.Item>
                     </Menu>
                 </div>
             </div>
