@@ -31,11 +31,6 @@ const OutgoingGoodsPage: React.FC<OutgoingGoodsPageProps> = ({ reports }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 router.delete(destroy(id))
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Successfully deleted outgoing goods report",
-                    icon: "success"
-                });
             }
         });
     }
