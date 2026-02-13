@@ -31,11 +31,6 @@ const IncomingGoodsPage: React.FC<IncomingGoodsPageProps> = ({ reports }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 router.delete(destroy(id))
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Successfully deleted incoming goods report",
-                    icon: "success"
-                });
             }
         });
     }

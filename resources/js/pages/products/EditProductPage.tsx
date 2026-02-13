@@ -1,5 +1,4 @@
 import { Form } from '@inertiajs/react'
-import Swal from "sweetalert2";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
@@ -14,14 +13,6 @@ interface EditProductPageProps {
 }
 
 const EditProductPage: React.FC<EditProductPageProps> = ({ product }) => {
-    const handleSuccess = () => {
-        Swal.fire({
-            title: "Success",
-            text: "Successfully update product",
-            icon: "success"
-        });
-    }
-
     return (
         <PageContent>
             <div className="pl-4 pt-5 text-4xl">
@@ -35,7 +26,7 @@ const EditProductPage: React.FC<EditProductPageProps> = ({ product }) => {
             <div className="content px-4 grow">
                 <Card className="bg-base-100 shadow-sm mb-2">
                     <Card.Body>
-                        <Form action={update(product.id)} onSuccess={handleSuccess}>
+                        <Form action={update(product.id)}>
                             {({ errors }) => (
                                 <>
                                     <Fieldset>

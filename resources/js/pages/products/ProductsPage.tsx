@@ -30,11 +30,6 @@ const ProductsPage: React.FC<ProductsPageProps> = ({ products }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 router.delete(destroy(id))
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Product has been deleted",
-                    icon: "success"
-                });
             }
         });
     }

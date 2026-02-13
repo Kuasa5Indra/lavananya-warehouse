@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\IncomingGoodsRequest;
 use App\Http\Requests\OutgoingGoodsRequest;
+use Illuminate\Validation\ValidationException;
 
 class ProductTransactionController extends Controller
 {
@@ -37,10 +38,11 @@ class ProductTransactionController extends Controller
                 'stock' => $product->stock + $request->validated('amount')
             ]);
             DB::commit();
+            Inertia::flash(['status' => 'success', 'title' => 'Success', 'message' => 'Successfully create incoming goods report']);
             return to_route('reports.incoming-goods.index');
         } catch (QueryException $ex) {
             DB::rollBack();
-            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => $ex->getMessage()])->back();
+            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'message' => $ex->getMessage()])->back();
         }
     }
 
@@ -64,10 +66,11 @@ class ProductTransactionController extends Controller
             ]);
             $report->update($request->validated());
             DB::commit();
+            Inertia::flash(['status' => 'success', 'title' => 'Success', 'message' => 'Successfully update incoming goods report']);
             return to_route('reports.incoming-goods.index');
         } catch (QueryException $ex) {
             DB::rollBack();
-            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => $ex->getMessage()])->back();
+            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'message' => $ex->getMessage()])->back();
         }
     }
 
@@ -81,10 +84,11 @@ class ProductTransactionController extends Controller
             ]);
             $report->delete();
             DB::commit();
+            Inertia::flash(['status' => 'success', 'title' => 'Deleted', 'message' => 'Successfully deleted incoming goods report']);
             return to_route('reports.incoming-goods.index');
         } catch (QueryException $ex) {
             DB::rollBack();
-            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => $ex->getMessage()])->back();
+            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'message' => $ex->getMessage()])->back();
         }
     }
 
@@ -110,17 +114,23 @@ class ProductTransactionController extends Controller
 
             // Cek apakah stok dikurangi request barang keluar akan menghasilkan negatif stok atau tidak
             if($product->stock - $request->validated('amount') < 0){
-                return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => 'Sorry, not enough stock for this report'])->back();
+                throw ValidationException::withMessages([
+                    'stock' => 'Insufficient amount to export',
+                ]);
             }
 
             $product->update([
                 'stock' => $product->stock - $request->validated('amount')
             ]);
+            Inertia::flash(['status' => 'success', 'title' => 'Success', 'message' => 'Successfully create outgoing goods report']);
             DB::commit();
             return to_route('reports.outgoing-goods.index');
         } catch (QueryException $ex) {
             DB::rollBack();
-            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => $ex->getMessage()])->back();
+            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'message' => $ex->getMessage()])->back();
+        } catch (ValidationException $ex) {
+            DB::rollBack();
+            return Inertia::flash(['status' => 'warning', 'title' => 'Invalid', 'message' => $ex->getMessage()])->back();
         }
     }
 
@@ -142,7 +152,9 @@ class ProductTransactionController extends Controller
 
             // Cek apakah stok dikurangi request barang keluar akan menghasilkan negatif stok atau tidak
             if($product->stock - $diffValue < 0){
-                return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => 'Sorry, not enough stock for this report'])->back();
+                throw ValidationException::withMessages([
+                    'stock' => 'Insufficient amount to export'
+                ]);
             }
 
             $product->update([
@@ -150,10 +162,14 @@ class ProductTransactionController extends Controller
             ]);
             $report->update($request->validated());
             DB::commit();
+            Inertia::flash(['status' => 'success', 'title' => 'Success', 'message' => 'Successfully update outgoing goods report']);
             return to_route('reports.outgoing-goods.index');
         } catch (QueryException $ex) {
             DB::rollBack();
-            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => $ex->getMessage()])->back();
+            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'message' => $ex->getMessage()])->back();
+        } catch (ValidationException $ex) {
+            DB::rollBack();
+            return Inertia::flash(['status' => 'warning', 'title' => 'Invalid', 'message' => $ex->getMessage()])->back();
         }
 
     }
@@ -168,10 +184,11 @@ class ProductTransactionController extends Controller
             ]);
             $report->delete();
             DB::commit();
+            Inertia::flash(['status' => 'success', 'title' => 'Deleted', 'message' => 'Successfully deleted outgoing goods report']);
             return to_route('reports.outgoing-goods.index');
         } catch (QueryException $ex) {
             DB::rollBack();
-            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'messsage' => $ex->getMessage()])->back();
+            return Inertia::flash(['status' => 'error', 'title' => 'Error', 'message' => $ex->getMessage()])->back();
         }
     }
 

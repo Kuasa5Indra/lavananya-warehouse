@@ -34,6 +34,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = Product::create($request->validated());
+        Inertia::flash(['status' => 'success', 'title' => 'Success', 'message' => 'Successfully create product']);
         return to_route('products.index');
     }
 
@@ -55,6 +56,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->update($request->validated());
+        Inertia::flash(['status' => 'success', 'title' => 'Success', 'message' => 'Successfully update product']);
         return to_route('products.index');
     }
 
@@ -65,6 +67,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
+        Inertia::flash(['status' => 'success', 'title' => 'Deleted', 'message' => 'Product has been deleted']);
         return to_route('products.index');
     }
 }
