@@ -3,6 +3,7 @@ import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome'
 import { router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
+import Checkbox from '@/components/ui/Checkbox';
 import Fieldset from '@/components/ui/Fieldset';
 import TextInput from '@/components/ui/TextInput';
 import AuthLayout from '@/layouts/AuthLayout';
@@ -14,6 +15,7 @@ const LoginPage = () => {
     const { data, setData, post, errors } = useForm({
         email: '',
         password: '',
+        remember: '0'
     })
 
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -53,12 +55,13 @@ const LoginPage = () => {
                     </Fieldset>
                 </div>
 
-                {/* <div className="form-control">
+                <div className="form-control">
                     <label className="label cursor-pointer">
-                        <input type="checkbox" className="checkbox" />
+                        <Checkbox color='neutral' value={data.remember} onChange={(e) => setData('remember', e.target.value === '0' ? '1' : '0')} />
+                        {/* <input type="checkbox" className="checkbox" /> */}
                         <span className="label-text ml-2">Remember me</span>
                     </label>
-                </div> */}
+                </div>
 
                 <Button color='primary' modifier='block' type='submit'>Login</Button>
                 <div className="divider">Dont have account</div>
